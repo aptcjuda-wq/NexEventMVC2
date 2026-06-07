@@ -1,0 +1,13 @@
+﻿using Microsoft.AspNetCore.Identity;
+
+namespace NexEventMVC2.Models
+{
+    public class ApplicationUser : IdentityUser
+    {
+        public string FullName { get; set; }
+
+        public string RoleName { get; set; }
+
+        public string? PhoneNumberCustom { get; set; }
+    }
+}
