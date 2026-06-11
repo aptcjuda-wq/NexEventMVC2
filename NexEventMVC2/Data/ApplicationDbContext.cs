@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using NexEventMVC2.Models;
 
-namespace NexEventMV2.Data
+namespace NexEventMVC2.Data
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
