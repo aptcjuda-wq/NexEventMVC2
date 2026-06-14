@@ -1,0 +1,33 @@
+﻿@model NexEventMVC2.Models.Event
+
+<h1>@Model.Title</h1>
+
+<p>
+    <strong>Venue:</strong>
+    @Model.Venue
+</p>
+
+<p>
+    <strong>Date:</strong>
+    @Model.Date.ToString("MMMM dd, yyyy")
+</p>
+
+<p>
+    <strong>Category:</strong>
+    @Model.Category
+</p>
+
+<p>
+    <strong>Price:</strong>
+    $@Model.TicketPrice
+</p>
+
+<p>
+    @Model.Description
+</p>
+<a asp-controller="Tickets"
+   asp-action="BookTicket"
+   asp-route-id="@Model.Id"
+   class="btn btn-success">
+    Book Ticket
+</a>

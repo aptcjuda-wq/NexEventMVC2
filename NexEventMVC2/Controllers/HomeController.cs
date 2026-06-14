@@ -1,25 +1,27 @@
 using Microsoft.AspNetCore.Mvc;
-using NexEventMVC2.Models;
-using System.Diagnostics;
+using Microsoft.EntityFrameworkCore;
+using NexEventMVC2.Data;
 
 namespace NexEventMVC2.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        private readonly ApplicationDbContext _context;
+
+        public HomeController(ApplicationDbContext context)
         {
-            return View();
+            _context = context;
         }
 
-        public IActionResult Privacy()
+        public async Task<IActionResult> Index()
         {
-            return View();
-        }
+            var eventsList = await _context.Events
+                .Where(e => e.Status == "Published")
+                .OrderByDescending(e => e.Date)
+                .Take(12)
+                .ToListAsync();
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View(eventsList);
         }
     }
 }

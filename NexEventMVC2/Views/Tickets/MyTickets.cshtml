@@ -1,0 +1,49 @@
+﻿@model IEnumerable<NexEventMVC2.Models.Registration>
+
+<h1>My Tickets</h1>
+
+<table class="table table-striped">
+
+    <thead>
+        <tr>
+            <th>Event</th>
+            <th>Quantity</th>
+            <th>Total</th>
+            <th>Status</th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+        @foreach (var ticket in Model)
+        {
+            <tr>
+
+                <td>@ticket.Event?.Title</td>
+
+                <td>@ticket.TicketQuantity</td>
+
+                <td>$@ticket.TotalAmount</td>
+
+                <td>@ticket.Status</td>
+
+                <td>
+
+                    @if (ticket.Status == "Active")
+                    {
+                        <a asp-action="CancelTicket"
+                           asp-route-id="@ticket.Id"
+                           class="btn btn-danger btn-sm">
+                            Cancel
+                        </a>
+                    }
+
+                </td>
+
+            </tr>
+        }
+
+    </tbody>
+
+</table>

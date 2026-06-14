@@ -13,6 +13,13 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<ApplicationDbContext>();
 
+IdentityBuilder identityBuilder = builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+{
+    options.SignIn.RequireConfirmedAccount = false;
+})
+.AddEntityFrameworkStores<ApplicationDbContext>()
+.AddDefaultTokenProviders();
+
 builder.Services.AddRazorPages();
 
 var app = builder.Build();
@@ -39,5 +46,13 @@ app.MapControllerRoute(
     .WithStaticAssets();
 
 app.MapRazorPages();
+
+using (var scope = app.Services.CreateScope())
+{
+    var roleManager =
+        scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+    await RoleSeeder.SeedRoles(roleManager);
+}
 
 app.Run();
